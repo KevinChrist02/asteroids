@@ -10,6 +10,11 @@ def main():
     time = pygame.time.Clock()
     dt = 0  # delta time, welche die Zeit angibt, seit dem der letzte Frame gerendert wurde
 
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    Player_containers = (updatable, drawable)
+
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     ## loop for the game surface
@@ -17,9 +22,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+
+        updatable.update(dt)
         screen.fill("black")
-        player.draw(screen)
-        player.update(dt)
+        for object in drawable:
+            object.draw(screen)
         pygame.display.flip()
 
         dt = time.tick(60) / 1000  # von millisekunden auf sekunden konvertieren
