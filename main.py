@@ -1,5 +1,6 @@
 import pygame
 from constants import *
+from player import Player
 
 
 def main():
@@ -9,12 +10,16 @@ def main():
     time = pygame.time.Clock()
     dt = 0  # delta time, welche die Zeit angibt, seit dem der letzte Frame gerendert wurde
 
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
     ## loop for the game surface
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        pygame.Surface.fill(screen, (0, 0, 0))
+        screen.fill("black")
+        player.draw(screen)
+        player.update(dt)
         pygame.display.flip()
 
         dt = time.tick(60) / 1000  # von millisekunden auf sekunden konvertieren
